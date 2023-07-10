@@ -13,7 +13,7 @@ class LocationUrl(object):
         if bool(is_valid_schema):
             raise KeyError(is_valid_schema)
         else:
-            return schema.dump(self._data).data
+            return schema.dump(self._data)
 
     @property
     def protocol(self):
@@ -254,7 +254,7 @@ includeNeighborhood=1&include=ciso2&maxResults=20&key=abs')])
         ordered = True
 
     @post_dump
-    def build_query_string(self, data):
+    def build_query_string(self, data, many=False):
         """This method occurs after dumping the data into the class.
 
         Args:
@@ -439,7 +439,7 @@ includeNeighborhood=1&include=ciso2&c=te&o=xml&maxResults=20&key=abs')])
         ordered = True
 
     @post_dump
-    def build_query_string(self, data):
+    def build_query_string(self, data, many=False):
         """This method occurs after dumping the data into the class.
 
         Args:
@@ -599,7 +599,7 @@ class LocationByQuerySchema(Location, Schema):
         ordered = True
 
     @post_dump
-    def build_query_string(self, data):
+    def build_query_string(self, data, many=False):
         """This method occurs after dumping the data into the class.
 
         Args:

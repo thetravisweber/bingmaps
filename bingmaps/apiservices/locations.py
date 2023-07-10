@@ -8,6 +8,7 @@ from bingmaps.urls import (
     LocationByQueryUrl,
     LocationByPointUrl
 )
+import pprint
 
 
 class LocationApi(object):
@@ -326,6 +327,7 @@ class LocationByQuery(LocationApi):
         self.locationApiData = requests.get(url)
         if not self.locationApiData.status_code == 200:
             raise self.locationApiData.raise_for_status()
+        self.data = self.locationApiData.json()
 
     def build_url(self):
         """Build the url and replaces /None/ with empty string"""
@@ -334,3 +336,16 @@ class LocationByQuery(LocationApi):
             return url.replace('/None/', '')
         else:
             return url
+        
+    def top_resource(self):
+        """
+        Process a response from the location API and return the relevant data.
+
+        :return: A dictionary containing the relevant address data.
+        """
+        try:
+            return self.data['resourceSets'][0]['resources'][0]
+        except:
+            raise Exception("Address Validation Failure.")
+        
+
